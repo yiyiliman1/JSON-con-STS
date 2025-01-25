@@ -1,6 +1,7 @@
 package com.example.Clase.controllers;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Clase.models.Alumno;
 import com.example.Clase.repositorio.AlumnoRepository;
 
-@RestController // Indica que esta clase es un controlador REST 
+@CrossOrigin(origins = "*") // Permitir cualquier origen (no recomendado en producción)
+@RestController
 public class AlumnoController {
 
     // Inyección de dependencia del repositorio
@@ -38,7 +40,7 @@ public class AlumnoController {
         }
     }
 
-    @CrossOrigin("http://192.168.1.148:5500") // Permitir solicitudes CORS desde un origen específico
+    //@CrossOrigin("http://192.168.1.148:5500") // Permitir solicitudes CORS desde un origen específico
     @PostMapping("/api/alumnos") // Endpoint para guardar un nuevo alumno
     public ResponseEntity<Alumno> guardarAlumno(@RequestBody Alumno alumno) {
         if(alumno.getId() != null) { // Validación para evitar IDs predefinidos
@@ -46,5 +48,10 @@ public class AlumnoController {
         }
         repositorio.save(alumno); // Guardar el nuevo alumno en la base de datos
         return ResponseEntity.ok(alumno);
+    }
+    
+    @GetMapping("/api/alumnos") // Cambia la ruta del endpoint para que coincida
+    public List<Alumno> obtenerAlumnos1() {
+        return repositorio.findAll();
     }
 }

@@ -24,3 +24,14 @@ let registroAlumno = async()=>{
          body: JSON.stringify(campos)
     });
 }
+
+let obtenerAlumno = async () => {
+    const respuesta = await fetch("http://localhost:8080/api/alumnos",
+        {
+            method: "GET",
+            headers: {
+                "Accept" : "application/json"
+            }
+        }
+    );
+}
